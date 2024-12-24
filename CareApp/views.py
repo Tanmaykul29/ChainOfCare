@@ -6,6 +6,10 @@ from rest_framework import status
 from .models import *
 from .serializers import *
 
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'index.html')
 
 class UserRoleView(APIView):
     authentication_classes = [JWTAuthentication]
