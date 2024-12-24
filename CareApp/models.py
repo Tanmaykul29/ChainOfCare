@@ -9,6 +9,17 @@ class User(AbstractUser):
         ('patient', 'Patient'),
     ]
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='patient')
+    # Add related_name to avoid clashes with the default User model
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='careapp_user_set',  # Custom related_name for 'groups'
+        blank=True
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='careapp_user_permissions_set',  # Custom related_name for 'user_permissions'
+        blank=True
+    )
 
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='patient_profile')
